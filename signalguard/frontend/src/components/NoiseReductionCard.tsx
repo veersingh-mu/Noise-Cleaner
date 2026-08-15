@@ -1,7 +1,7 @@
 import React from 'react';
-import { ShieldCheck, TrendingUp, Zap, Radio } from 'lucide-react';
+import { ShieldCheck, TrendingUp, Radio } from 'lucide-react';
 import { ResponsiveContainer, AreaChart, Area, YAxis } from 'recharts';
-import { MetricsSnapshot } from '../lib/types.js';
+import { MetricsSnapshot } from '../lib/types';
 
 interface NoiseReductionCardProps {
   percentage: number;
@@ -30,58 +30,58 @@ export const NoiseReductionCard: React.FC<NoiseReductionCardProps> = ({
   const isHighEfficiency = percentage >= 90;
 
   return (
-    <div className="relative overflow-hidden bg-surface rounded-card border border-border p-6 shadow-xl transition-all duration-300 hover:border-border-bright">
+    <div className="relative overflow-hidden bg-surface rounded-card border border-border p-4 sm:p-6 shadow-xl transition-all duration-300 hover:border-border-bright">
       {/* Background glow gradient */}
       <div className="absolute -right-16 -top-16 w-64 h-64 bg-success/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -left-16 -bottom-16 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-6 relative z-10">
         {/* Left Side: Hero NRR & Badges */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-success-muted text-success border border-success/30">
-              <ShieldCheck className="w-5 h-5" />
+        <div className="space-y-2.5 sm:space-y-3 w-full lg:w-auto">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-success-muted text-success border border-success/30 shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold">
+              <span className="text-[10px] sm:text-xs font-mono uppercase tracking-wider text-slate-400 font-semibold block">
                 Sentinel Efficiency
               </span>
-              <h3 className="text-sm font-medium text-slate-200">
+              <h3 className="text-xs sm:text-sm font-medium text-slate-200">
                 Noise Reduction Ratio (NRR)
               </h3>
             </div>
             {eventsPerSecond > 0 && (
-              <div className="ml-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary-muted border border-primary/30 text-primary text-xs font-mono">
+              <div className="ml-auto sm:ml-2 flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-primary-muted border border-primary/30 text-primary text-[11px] sm:text-xs font-mono">
                 <Radio className="w-3 h-3 animate-pulse" />
                 <span>{eventsPerSecond} eps</span>
               </div>
             )}
           </div>
 
-          <div className="flex items-baseline gap-3">
-            <span className="font-mono text-5xl lg:text-6xl font-bold tracking-tight text-white animate-number-flash">
+          <div className="flex flex-wrap items-baseline gap-2.5 sm:gap-3 pt-1">
+            <span className="font-mono text-4xl xs:text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white animate-number-flash">
               {formattedPct}%
             </span>
-            <span className="text-xs font-mono text-success bg-success-muted px-2.5 py-1 rounded-full border border-success/30 flex items-center gap-1">
+            <span className="text-[11px] sm:text-xs font-mono text-success bg-success-muted px-2.5 py-1 rounded-full border border-success/30 flex items-center gap-1">
               <TrendingUp className="w-3 h-3" />
               {isHighEfficiency ? 'Optimal Suppression' : 'Active Filtering'}
             </span>
           </div>
 
-          <p className="text-xs text-slate-400 max-w-md leading-relaxed">
+          <p className="text-[11px] sm:text-xs text-slate-400 max-w-md leading-relaxed">
             <strong className="text-slate-200 font-mono">{suppressedCount.toLocaleString()}</strong> duplicate error occurrences intercepted & batched into thread updates, preventing alert storm fatigue across on-call channels.
           </p>
         </div>
 
         {/* Right Side: Mini Trend Sparkline & Ratio Breakdown */}
-        <div className="w-full lg:w-72 flex flex-col gap-3 bg-surface-muted/70 p-4 rounded-xl border border-border/80">
-          <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
+        <div className="w-full lg:w-72 flex flex-col gap-2.5 sm:gap-3 bg-surface-muted/70 p-3.5 sm:p-4 rounded-xl border border-border/80 shrink-0">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-slate-400 font-mono">
             <span>Reduction Trend</span>
             <span className="text-slate-300">{sentCount} sent / {rawCount.toLocaleString()} raw</span>
           </div>
 
           {/* Sparkline chart */}
-          <div className="h-16 w-full">
+          <div className="h-14 sm:h-16 w-full">
             {chartData.length > 1 ? (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={chartData} margin={{ top: 2, right: 0, left: 0, bottom: 0 }}>
@@ -104,7 +104,7 @@ export const NoiseReductionCard: React.FC<NoiseReductionCardProps> = ({
                 </AreaChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full flex items-center justify-center text-xs text-slate-500 font-mono">
+              <div className="h-full flex items-center justify-center text-[11px] text-slate-500 font-mono">
                 Gathering telemetry...
               </div>
             )}
@@ -123,7 +123,7 @@ export const NoiseReductionCard: React.FC<NoiseReductionCardProps> = ({
               title={`Dispatched: ${(100 - percentage).toFixed(1)}%`}
             />
           </div>
-          <div className="flex justify-between text-[10px] font-mono text-slate-400">
+          <div className="flex justify-between text-[9px] sm:text-[10px] font-mono text-slate-400">
             <span className="text-success flex items-center gap-1">● {suppressedCount} Suppressed</span>
             <span className="text-critical flex items-center gap-1">● {sentCount} Dispatched</span>
           </div>

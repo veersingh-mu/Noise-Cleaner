@@ -168,28 +168,28 @@ export function App() {
     <div className="min-h-screen bg-background text-slate-100 flex flex-col font-sans selection:bg-primary selection:text-white">
       {/* Top Navigation Bar */}
       <header className="border-b border-border bg-surface/90 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo & Brand */}
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-primary text-white shadow-lg glow-primary">
-              <ShieldAlert className="w-5 h-5" />
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="p-1.5 sm:p-2 rounded-xl bg-primary text-white shadow-lg glow-primary shrink-0">
+              <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-bold tracking-tight text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="font-mono text-xs sm:text-sm font-bold tracking-tight text-white truncate">
                   SIGNALGUARD
                 </span>
-                <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-primary/20 text-primary border border-primary/30">
+                <span className="text-[9px] sm:text-[10px] font-mono font-semibold px-1 sm:px-1.5 py-0.5 rounded bg-primary/20 text-primary border border-primary/30 shrink-0">
                   SENTINEL
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 hidden sm:block">
+              <p className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:block truncate">
                 Intelligent Alert Fatigue Reducer
               </p>
             </div>
           </div>
 
-          {/* Center Navigation Tabs */}
+          {/* Center Navigation Tabs (Desktop only: md+) */}
           <nav className="hidden md:flex items-center gap-1 bg-background p-1 rounded-lg border border-border">
             <button
               onClick={() => setActiveTab('dashboard')}
@@ -230,30 +230,31 @@ export function App() {
           </nav>
 
           {/* Right Header Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Live Firebase Status Badge */}
             <div
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-success/40 bg-success/15 text-success text-xs font-mono font-medium shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full border border-success/40 bg-success/15 text-success text-[11px] sm:text-xs font-mono font-medium shadow-sm transition-all"
               title="Connected to Firebase and live deduplication stream"
             >
-              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-              <span>Firebase Live</span>
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-success animate-pulse" />
+              <span className="hidden xs:inline">Firebase</span>
+              <span>Live</span>
             </div>
 
             {/* Simulator Trigger CTA */}
             <button
               onClick={() => setIsSimulatorOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-mono font-semibold flex items-center gap-1.5 shadow-md glow-primary transition-all hover:scale-[1.02]"
+              className="px-2.5 sm:px-3.5 py-1.5 min-h-[36px] rounded-lg bg-primary hover:bg-primary-hover text-white text-xs font-mono font-semibold flex items-center gap-1.5 shadow-md glow-primary transition-all hover:scale-[1.02] active:scale-95"
             >
-              <Zap className="w-3.5 h-3.5" />
+              <Zap className="w-3.5 h-3.5 text-amber-300" />
               <span>Simulator</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex-1 space-y-6 w-full">
+      {/* Main Content Area (extra bottom padding on mobile for fixed bottom bar) */}
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 pb-24 md:pb-8 flex-1 space-y-4 sm:space-y-6 w-full">
         {/* Toast alert banner */}
         {toastMessage && (
           <div className="p-3 rounded-lg bg-primary/15 border border-primary/40 text-xs font-mono text-slate-100 flex items-center gap-2 shadow-lg animate-fade-in">
@@ -264,7 +265,7 @@ export function App() {
 
         {/* Tab 1: Dashboard View */}
         {activeTab === 'dashboard' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Hero NRR Section */}
             <NoiseReductionCard
               percentage={displayNrr}
@@ -279,7 +280,7 @@ export function App() {
             <StatRow metrics={metrics} />
 
             {/* Ingestion & Incidents 2-Column Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
               {/* Left Column: Incidents Table (7 cols) */}
               <div className="lg:col-span-7">
                 <IncidentTable
@@ -324,15 +325,61 @@ export function App() {
 
         {/* Tab 3: Matrix & Channel Config View */}
         {activeTab === 'config' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <ConfigEditor onSaved={loadData} />
             {cooldownConfig && <CooldownHeatmap config={cooldownConfig} />}
           </div>
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border/80 bg-surface/50 py-4 mt-12">
+      {/* Mobile Fixed Bottom Navigation Bar (md:hidden) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-surface/95 backdrop-blur-xl border-t border-border px-2 py-1.5 flex items-center justify-around md:hidden shadow-2xl">
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`flex flex-col items-center justify-center py-1 px-3 min-h-[44px] min-w-[70px] rounded-lg text-[10px] font-mono transition-all ${
+            activeTab === 'dashboard'
+              ? 'text-primary font-bold bg-primary/10'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <LayoutDashboard className="w-4 h-4 mb-0.5" />
+          <span>Dashboard</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('incidents')}
+          className={`flex flex-col items-center justify-center py-1 px-3 min-h-[44px] min-w-[70px] rounded-lg text-[10px] font-mono relative transition-all ${
+            activeTab === 'incidents'
+              ? 'text-primary font-bold bg-primary/10'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <div className="relative">
+            <Layers className="w-4 h-4 mb-0.5" />
+            {incidents.length > 0 && (
+              <span className="absolute -top-1 -right-2 px-1 py-0.2 text-[8px] font-bold rounded-full bg-primary text-white">
+                {incidents.length}
+              </span>
+            )}
+          </div>
+          <span>Incidents</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('config')}
+          className={`flex flex-col items-center justify-center py-1 px-3 min-h-[44px] min-w-[70px] rounded-lg text-[10px] font-mono transition-all ${
+            activeTab === 'config'
+              ? 'text-primary font-bold bg-primary/10'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Sliders className="w-4 h-4 mb-0.5" />
+          <span>Matrix</span>
+        </button>
+      </nav>
+
+      {/* Footer (hidden on small mobile or compact) */}
+      <footer className="border-t border-border/80 bg-surface/50 py-4 mt-6 hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-slate-500 gap-2">
           <span>SignalGuard Sentinel • Enterprise Alert Fatigue Reducer</span>
           <span>Dual Cooldown Matrix & Rolling 60s Burst Protection</span>

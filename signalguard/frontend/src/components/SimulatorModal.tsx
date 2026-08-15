@@ -62,30 +62,30 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({ isOpen, onClose,
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-surface rounded-card border border-border w-full max-w-lg p-6 shadow-2xl space-y-6 animate-fade-in">
+    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-4">
+      <div className="bg-surface rounded-card border border-border w-full max-w-lg p-4 sm:p-6 shadow-2xl space-y-4 sm:space-y-6 max-h-[92vh] overflow-y-auto animate-fade-in">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-border pb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-primary/20 text-primary border border-primary/30 shadow-sm">
-              <Zap className="w-5 h-5" />
+        <div className="flex items-center justify-between border-b border-border pb-3 sm:pb-4">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/20 text-primary border border-primary/30 shadow-sm shrink-0">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-amber-300" />
             </div>
-            <div>
-              <h2 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <span>Traffic & Alert Storm Simulator</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-primary/20 text-primary border border-primary/30">
+            <div className="min-w-0">
+              <h2 className="text-xs sm:text-sm font-bold text-slate-100 flex items-center gap-1.5 sm:gap-2 truncate">
+                <span className="truncate">Traffic & Alert Storm Simulator</span>
+                <span className="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-mono bg-primary/20 text-primary border border-primary/30 shrink-0">
                   Interactive
                 </span>
               </h2>
-              <p className="text-[11px] text-slate-400">
-                Inject synthetic production error storms to test real-time deduplication
+              <p className="text-[10px] sm:text-[11px] text-slate-400 truncate">
+                Inject synthetic production error storms to test deduplication
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded hover:bg-border text-slate-400 hover:text-slate-200 transition-colors"
+            className="p-1.5 min-h-[36px] min-w-[36px] rounded hover:bg-border text-slate-400 hover:text-slate-200 transition-colors flex items-center justify-center shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -96,7 +96,7 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({ isOpen, onClose,
           <label className="text-xs font-mono text-slate-300 font-semibold block">
             Select Simulation Pattern:
           </label>
-          <div className="grid grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 xs:grid-cols-3 gap-2 sm:gap-2.5">
             {[
               {
                 id: 'burst',
@@ -133,13 +133,13 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({ isOpen, onClose,
                     setPattern(p.id as any);
                     setEventsPerSecond(p.defaultEps);
                   }}
-                  className={`p-3 rounded-lg border text-left transition-all ${
+                  className={`p-2.5 sm:p-3 rounded-lg border text-left transition-all min-h-[44px] ${
                     isSel
                       ? 'bg-surface-hover border-primary shadow-md glow-primary'
                       : 'bg-background border-border/80 hover:border-border'
                   }`}
                 >
-                  <IconComp className={`w-4 h-4 mb-1.5 ${p.color}`} />
+                  <IconComp className={`w-4 h-4 mb-1 ${p.color}`} />
                   <span className="text-xs font-mono font-bold block text-slate-200">{p.title}</span>
                   <span className="text-[10px] text-slate-400 leading-tight block mt-0.5">{p.desc}</span>
                 </button>
@@ -149,14 +149,14 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({ isOpen, onClose,
         </div>
 
         {/* Controls Grid */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <label className="text-xs font-mono text-slate-400">Duration (Seconds):</label>
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="space-y-1 sm:space-y-1.5">
+            <label className="text-[11px] sm:text-xs font-mono text-slate-400">Duration:</label>
             <select
               value={durationSeconds}
               disabled={isRunning}
               onChange={(e) => setDurationSeconds(parseInt(e.target.value, 10))}
-              className="w-full bg-background border border-border rounded px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-primary disabled:opacity-50"
+              className="w-full bg-background border border-border rounded px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-primary disabled:opacity-50 min-h-[36px]"
             >
               <option value={5}>5 seconds</option>
               <option value={10}>10 seconds</option>
@@ -165,18 +165,18 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({ isOpen, onClose,
             </select>
           </div>
 
-          <div className="space-y-1.5">
-            <label className="text-xs font-mono text-slate-400">Events / Second:</label>
+          <div className="space-y-1 sm:space-y-1.5">
+            <label className="text-[11px] sm:text-xs font-mono text-slate-400">Rate (EPS):</label>
             <select
               value={eventsPerSecond}
               disabled={isRunning}
               onChange={(e) => setEventsPerSecond(parseInt(e.target.value, 10))}
-              className="w-full bg-background border border-border rounded px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-primary disabled:opacity-50"
+              className="w-full bg-background border border-border rounded px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-primary disabled:opacity-50 min-h-[36px]"
             >
               <option value={25}>25 eps (Low)</option>
               <option value={100}>100 eps (Medium)</option>
               <option value={250}>250 eps (High)</option>
-              <option value={500}>500 eps (Extreme Storm)</option>
+              <option value={500}>500 eps (Extreme)</option>
             </select>
           </div>
         </div>
@@ -204,32 +204,32 @@ export const SimulatorModal: React.FC<SimulatorModalProps> = ({ isOpen, onClose,
 
         {/* Status Message */}
         {statusMessage && !isRunning && (
-          <div className="p-3 rounded bg-primary-muted border border-primary/30 text-xs font-mono text-primary flex items-center gap-2">
+          <div className="p-2.5 sm:p-3 rounded bg-primary-muted border border-primary/30 text-xs font-mono text-primary flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-success" />
             <span>{statusMessage}</span>
           </div>
         )}
 
         {/* Footer Actions */}
-        <div className="pt-3 border-t border-border flex items-center justify-between">
-          <span className="text-[11px] font-mono text-slate-500">
-            Total load: ~{totalEvents.toLocaleString()} events
+        <div className="pt-3 border-t border-border flex items-center justify-between gap-2">
+          <span className="text-[10px] sm:text-[11px] font-mono text-slate-500 truncate">
+            Load: ~{totalEvents.toLocaleString()} events
           </span>
 
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={onClose}
-              className="px-3.5 py-1.5 rounded bg-border hover:bg-border-bright text-xs font-mono text-slate-300 transition-colors"
+              className="px-3 py-1.5 min-h-[38px] rounded bg-border hover:bg-border-bright text-xs font-mono text-slate-300 transition-colors"
             >
               Close
             </button>
             <button
               onClick={handleStartSimulation}
               disabled={isRunning}
-              className="px-4 py-1.5 rounded bg-primary hover:bg-primary-hover text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-md glow-primary transition-all disabled:opacity-50 hover:scale-[1.02]"
+              className="px-3.5 sm:px-4 py-1.5 min-h-[38px] rounded bg-primary hover:bg-primary-hover text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-md glow-primary transition-all disabled:opacity-50 hover:scale-[1.02] active:scale-95"
             >
-              <Play className="w-3.5 h-3.5" />
-              <span>{isRunning ? 'Injecting Traffic...' : 'Inject Traffic'}</span>
+              <Play className="w-3.5 h-3.5 text-amber-300" />
+              <span>{isRunning ? 'Injecting...' : 'Inject Traffic'}</span>
             </button>
           </div>
         </div>
