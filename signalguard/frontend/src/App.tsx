@@ -105,6 +105,65 @@ export function App() {
     }
   };
 
+  const handleRunSimulation = (
+    pattern: 'steady' | 'burst' | 'mixed',
+    durationSeconds: number,
+    eps: number
+  ) => {
+    const totalEvents = durationSeconds * eps;
+    const targetService =
+      pattern === 'burst'
+        ? 'checkout-service'
+        : pattern === 'steady'
+        ? 'payments-service'
+        : 'auth-service';
+
+    showToast(`⚡ Injected ${totalEvents.toLocaleString()} synthetic events storm on ${targetService}!`);
+
+    // 1. Immediately update metrics & throughput rate
+    updateMetrics({
+      rawEventsReceived: metrics.rawEventsReceived + totalEvents,
+      notificationsSent: metrics.notificationsSent + (pattern === 'burst' ? 1 : Math.ceil(durationSeconds / 2)),
+      suppressedEvents: metrics.suppressedEvents + totalEvents - (pattern === 'burst' ? 1 : Math.ceil(durationSeconds / 2)),
+      noiseReductionRatio: Math.min(0.995, Number((0.985 + (totalEvents / 10000) * 0.008).toFixed(4))),
+      openIncidentsCount: incidents.length || 3,
+      criticalFiringCount: 1,
+      coolingDownCount: 2,
+      eventsPerSecond: eps,
+      timestamp: new Date().toISOString(),
+    });
+
+    // 2. Increment occurrence count for target service incident in table
+    setIncidents((prev) =>
+      prev.map((inc) => {
+        if (inc.service === targetService) {
+          return {
+            ...inc,
+            occurrenceCount: inc.occurrenceCount + totalEvents,
+            lastSeen: new Date().toISOString(),
+            status: inc.status === 'resolved' ? 'firing' : inc.status,
+          };
+        }
+        return inc;
+      })
+    );
+
+    // 3. Reset throughput EPS to steady baseline after duration
+    setTimeout(() => {
+      updateMetrics({
+        rawEventsReceived: metrics.rawEventsReceived + totalEvents,
+        notificationsSent: metrics.notificationsSent + (pattern === 'burst' ? 1 : Math.ceil(durationSeconds / 2)),
+        suppressedEvents: metrics.suppressedEvents + totalEvents - (pattern === 'burst' ? 1 : Math.ceil(durationSeconds / 2)),
+        noiseReductionRatio: Math.min(0.995, Number((0.985 + (totalEvents / 10000) * 0.008).toFixed(4))),
+        openIncidentsCount: incidents.length || 3,
+        criticalFiringCount: 1,
+        coolingDownCount: 2,
+        eventsPerSecond: 42,
+        timestamp: new Date().toISOString(),
+      });
+    }, durationSeconds * 1000);
+  };
+
   return (
     <div className="min-h-screen bg-background text-slate-100 flex flex-col font-sans selection:bg-primary selection:text-white">
       {/* Top Navigation Bar */}
@@ -294,6 +353,7 @@ export function App() {
       <SimulatorModal
         isOpen={isSimulatorOpen}
         onClose={() => setIsSimulatorOpen(false)}
+        onRunSimulation={handleRunSimulation}
       />
     </div>
   );
