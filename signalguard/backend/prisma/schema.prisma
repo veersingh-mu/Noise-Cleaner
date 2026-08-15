@@ -1,0 +1,44 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Incident {
+  id                String       @id @default(cuid())
+  fingerprint       String       @unique
+  service           String
+  errorType         String
+  severity          String       // critical | high | medium | low
+  status            String       // firing | cooling_down | resolved
+  normalizedMessage String
+  sampleStackTrace  String       @db.Text
+  occurrenceCount   Int          @default(1)
+  affectedInstances String[]     // instance IDs seen
+  firstSeen         DateTime     @default(now())
+  lastSeen          DateTime     @default(now())
+  alertChannelRef   String?      // slack thread_ts / pagerduty incident id / discord message id
+  occurrences       Occurrence[]
+  createdAt         DateTime     @default(now())
+}
+
+model Occurrence {
+  id         String   @id @default(cuid())
+  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  incidentId String
+  instanceId String
+  rawMessage String   @db.Text
+  timestamp  DateTime @default(now())
+  suppressed Boolean  // true if this occurrence did NOT trigger a new alert/thread update
+}
+
+model MetricsSnapshot {
+  id                  String   @id @default(cuid())
+  timestamp           DateTime @default(now())
+  rawEventsReceived   Int
+  notificationsSent   Int
+  noiseReductionRatio Float
+}

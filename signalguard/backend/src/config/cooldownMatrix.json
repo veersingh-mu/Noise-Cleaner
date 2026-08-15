@@ -1,0 +1,32 @@
+{
+  "default": {
+    "critical": 30,
+    "high": 120,
+    "medium": 300,
+    "low": 900
+  },
+  "burstThreshold": {
+    "critical": 20,
+    "high": 50,
+    "medium": 100,
+    "low": 200
+  },
+  "overrides": {
+    "payments-service": {
+      "critical": 10,
+      "high": 60
+    },
+    "checkout-service": {
+      "critical": 15,
+      "high": 90
+    },
+    "auth-service": {
+      "critical": 20,
+      "high": 100
+    },
+    "notification-worker": {
+      "critical": 45,
+      "high": 180
+    }
+  }
+}

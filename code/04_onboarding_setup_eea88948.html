@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SignalGuard - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#32353c",
+                        "surface-container-low": "#191b23",
+                        "tertiary": "#ffb786",
+                        "on-primary": "#002e6a",
+                        "background": "#10131a",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-tertiary": "#502400",
+                        "primary": "#adc6ff",
+                        "on-secondary": "#3c0091",
+                        "on-primary-fixed-variant": "#004395",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-dim": "#10131a",
+                        "on-tertiary-fixed": "#311400",
+                        "on-error": "#690005",
+                        "on-background": "#e1e2ec",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "inverse-primary": "#005ac2",
+                        "on-primary-fixed": "#001a42",
+                        "primary-container": "#4d8eff",
+                        "surface-bright": "#363941",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "outline-variant": "#424754",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#2e3038",
+                        "on-surface": "#e1e2ec",
+                        "surface-container-lowest": "#0b0e15",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#461f00",
+                        "on-surface-variant": "#c2c6d6",
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-container": "#00285d",
+                        "secondary": "#d0bcff",
+                        "surface-container": "#1d2027",
+                        "outline": "#8c909f",
+                        "surface": "#10131a",
+                        "surface-tint": "#adc6ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "surface-variant": "#32353c",
+                        "inverse-surface": "#e1e2ec",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#23005c",
+                        "secondary-container": "#571bc1",
+                        "tertiary-container": "#df7412",
+                        "on-secondary-container": "#c4abff",
+                        "surface-container-high": "#272a31"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "section-gap": "32px",
+                        "row-gap": "4px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface-container-lowest');
+            color: theme('colors.on-surface');
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-container-padding font-body-md text-body-md bg-surface-container-lowest">
+<!-- TopNavBar Suppressed for Onboarding (Linear/Transactional intent) -->
+<!-- SideNavBar Suppressed for Onboarding (Linear/Transactional intent) -->
+<main class="w-full max-w-4xl flex flex-col items-center gap-section-gap">
+<!-- Header Section -->
+<header class="text-center space-y-4">
+<h1 class="font-display-lg text-display-lg text-primary">Connect your first alert channel</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg mx-auto">
+                SignalGuard needs a destination to route critical incident alerts. Select an integration below or use the ingest API to get started.
+            </p>
+</header>
+<!-- Integration Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter w-full">
+<!-- Slack Card -->
+<div class="bg-surface-container flex flex-col items-center p-container-padding rounded-lg border border-outline-variant hover:border-primary transition-colors duration-200">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px] text-on-surface" style="font-variation-settings: 'FILL' 1;">forum</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Slack</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center mb-6">Route alerts to specific channels and tag on-call engineers.</p>
+<button class="mt-auto w-full py-2 bg-primary-container text-on-primary-container font-body-sm text-body-sm rounded hover:bg-primary hover:text-on-primary transition-colors duration-200">
+                    Connect
+                </button>
+</div>
+<!-- PagerDuty Card -->
+<div class="bg-surface-container flex flex-col items-center p-container-padding rounded-lg border border-outline-variant hover:border-primary transition-colors duration-200">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px] text-on-surface" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">PagerDuty</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center mb-6">Trigger, acknowledge, and resolve incidents directly.</p>
+<button class="mt-auto w-full py-2 bg-primary-container text-on-primary-container font-body-sm text-body-sm rounded hover:bg-primary hover:text-on-primary transition-colors duration-200">
+                    Connect
+                </button>
+</div>
+<!-- Discord Card -->
+<div class="bg-surface-container flex flex-col items-center p-container-padding rounded-lg border border-outline-variant hover:border-primary transition-colors duration-200">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px] text-on-surface" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2">Discord</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center mb-6">Send webhooks to Discord channels for team visibility.</p>
+<button class="mt-auto w-full py-2 bg-primary-container text-on-primary-container font-body-sm text-body-sm rounded hover:bg-primary hover:text-on-primary transition-colors duration-200">
+                    Connect
+                </button>
+</div>
+</div>
+<!-- Divider -->
+<div class="w-full flex items-center gap-4">
+<div class="h-px bg-outline-variant flex-1"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wider">Or ingest manually</span>
+<div class="h-px bg-outline-variant flex-1"></div>
+</div>
+<!-- Code Snippet Section -->
+<div class="w-full bg-surface-container rounded-lg border border-outline-variant p-4">
+<div class="flex items-center justify-between mb-4 border-b border-outline-variant pb-2">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">Test Event Ingestion</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors" title="Copy to clipboard">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+<pre class="font-code-md text-code-md text-primary-fixed overflow-x-auto whitespace-pre-wrap break-all p-2 bg-surface-container-lowest rounded border border-outline-variant/50"><code>curl -X POST https://api.signalguard.dev/v1/ingest \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "severity": "critical",
+    "source": "api-gateway",
+    "message": "High latency detected on checkout endpoint"
+  }'</code></pre>
+</div>
+</main>
+</body></html>

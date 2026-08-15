@@ -1,0 +1,58 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper: Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Incidents collection & occurrences subcollection
+    // Dashboard viewers can read; client writes are completely blocked (Admin SDK only)
+    match /incidents/{incidentId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+
+      match /occurrences/{occurrenceId} {
+        allow read: if isAuthenticated();
+        allow write: if false;
+      }
+    }
+
+    // Fingerprint fast-lookup collection
+    match /fingerprintIndex/{fingerprintHash} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    // Rollup metrics snapshots for historical charts
+    match /metricsSnapshots/{snapshotId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    // Cooldown matrix & channel routing configuration
+    // Read allowed for dashboard; writes must be routed through callable Cloud Functions
+    match /config/{configDoc} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    // Live lightweight feed stream for dashboard real-time view
+    match /liveFeed/{feedId} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    // Internal API keys for service authentication - no client access
+    match /apiKeys/{keyId} {
+      allow read, write: if false;
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

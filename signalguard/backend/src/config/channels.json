@@ -1,0 +1,25 @@
+{
+  "default": ["slack", "discord"],
+  "services": {
+    "payments-service": ["slack", "pagerduty", "discord"],
+    "checkout-service": ["slack", "pagerduty"],
+    "auth-service": ["slack", "discord"],
+    "notification-worker": ["discord"]
+  },
+  "endpoints": {
+    "slack": {
+      "enabled": true,
+      "channel": "#alerts-sre-critical",
+      "webhookUrl": "https://hooks.slack.com/services/MOCK/TOKEN/SIGNALGUARD"
+    },
+    "pagerduty": {
+      "enabled": true,
+      "routingKey": "mock-pd-routing-key-signalguard",
+      "endpoint": "https://events.pagerduty.com/v2/enqueue"
+    },
+    "discord": {
+      "enabled": true,
+      "webhookUrl": "https://discord.com/api/webhooks/mock/signalguard"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "name": "assets/d2e7d29e0bb746c68643a2a319e06ef5",
+  "id": "asset-stub-assets_d2e7d29e0bb746c68643a2a319e06ef5",
+  "displayName": "SignalGuard Mission Control",
+  "colorMode": "DARK",
+  "font": "INTER",
+  "roundness": "ROUND_EIGHT",
+  "customColor": "#3b82f6",
+  "overridePrimaryColor": "#3b82f6",
+  "overrideSecondaryColor": "#8b5cf6",
+  "spacingScale": 2,
+  "typography": {
+    "display-lg": {
+      "fontFamily": "Inter",
+      "fontSize": "30px",
+      "fontWeight": "600",
+      "lineHeight": "36px",
+      "letterSpacing": "-0.02em"
+    },
+    "headline-md": {
+      "fontFamily": "Inter",
+      "fontSize": "20px",
+      "fontWeight": "600",
+      "lineHeight": "28px"
+    },
+    "body-md": {
+      "fontFamily": "Inter",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "20px"
+    },
+    "body-sm": {
+      "fontFamily": "Inter",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16px"
+    },
+    "code-md": {
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "13px",
+      "fontWeight": "400",
+      "lineHeight": "18px"
+    },
+    "code-sm": {
+      "fontFamily": "JetBrains Mono",
+      "fontSize": "11px",
+      "fontWeight": "500",
+      "lineHeight": "14px",
+      "letterSpacing": "0.02em"
+    }
+  },
+  "namedColors": {
+    "background": "#10131a",
+    "surface": "#10131a",
+    "surface_dim": "#10131a",
+    "surface_bright": "#363941",
+    "surface_container_lowest": "#0b0e15",
+    "surface_container_low": "#191b23",
+    "surface_container": "#1d2027",
+    "surface_container_high": "#272a31",
+    "surface_container_highest": "#32353c",
+    "on_surface": "#e1e2ec",
+    "on_surface_variant": "#c2c6d6",
+    "inverse_surface": "#e1e2ec",
+    "inverse_on_surface": "#2e3038",
+    "outline": "#8c909f",
+    "outline_variant": "#424754",
+    "surface_tint": "#adc6ff",
+    "primary": "#adc6ff",
+    "on_primary": "#002e6a",
+    "primary_container": "#4d8eff",
+    "on_primary_container": "#00285d",
+    "inverse_primary": "#005ac2",
+    "secondary": "#d0bcff",
+    "on_secondary": "#3c0091",
+    "secondary_container": "#571bc1",
+    "on_secondary_container": "#c4abff",
+    "tertiary": "#ffb786",
+    "on_tertiary": "#502400",
+    "tertiary_container": "#df7412",
+    "on_tertiary_container": "#461f00",
+    "error": "#ffb4ab",
+    "on_error": "#690005",
+    "error_container": "#93000a",
+    "on_error_container": "#ffdad6"
+  },
+  "spacing": {
+    "unit": "4px",
+    "container-padding": "24px",
+    "gutter": "16px",
+    "row-gap": "4px",
+    "section-gap": "32px"
+  },
+  "styleGuidelines": "# SignalGuard Mission Control Design System\n\n## Brand & Style\nThe design system is engineered for high-stakes SRE and DevOps environments where cognitive load management is paramount. The personality is **Precise, Technical, and Authoritative**, designed to feel like a modern mission-control interface.\n\nThe visual style follows a **Modern Corporate/Technical** aesthetic with a heavy emphasis on data density and information hierarchy. It utilizes a deep dark-mode palette to reduce eye strain during long on-call shifts, employing subtle 1px borders and distinct tonal layers rather than heavy shadows to define structure. The UI is intentionally \"quiet\" until an incident occurs, at which point high-saturation status colors draw immediate attention to critical failures.\n\n## Colors\nThe palette is optimized for a **Dark Mode Only** experience. \n\n- **Foundations:** Use `#0B0E14` for the primary application background and `#151922` for all card-based containers or sidebars. \n- **Borders:** Apply `#242938` for all structural dividers and element outlines.\n- **Accents:** The Primary Electric Blue is reserved for interactive states and primary actions.\n- **Semantic Logic:** \n    - **Critical (#EF4444):** Used for \"Firing\" alerts and high-error rates.\n    - **Warning (#F59E0B):** Used for \"Pending\" or threshold breaches.\n    - **Success (#10B981):** Used for \"Resolved\" states or healthy heartbeat signals.\n    - **Info (#8B5CF6):** Used for \"Suppressed\" alerts or configuration-related metadata.\n\n## Typography\nThis design system employs a dual-font strategy to separate UI navigation from raw data analysis.\n\n- **Inter (Sans-serif):** Used for all navigational elements, page titles, and descriptive text. It provides a modern, readable foundation for the interface.\n- **JetBrains Mono (Monospace):** Used for all technical strings including Trace IDs, Fingerprints, Timestamps, IP addresses, and Metric values. The increased legibility of individual characters helps prevent errors when reading complex logs.\n\n**Scale and Density:**\nLine heights are kept tight (approx 1.2x - 1.4x) to maximize the amount of information visible on screen without requiring excessive scrolling.\n\n## Layout & Spacing\nThe layout follows a **Fluid Grid** model with high-density spacing.\n\n- **Grid:** Use a 12-column layout for dashboard views. On desktop, use 24px outer margins and 16px gutters between metric cards.\n- **Rhythm:** A 4px baseline grid ensures alignment across technical data. \n- **Data Rows:** For log streams and tables, use a 4px vertical gap between rows to maintain a high information density while preserving horizontal scanability.\n- **Mobile Adaption:** At the 768px breakpoint, the 12-column grid collapses into a single-column stack, and container padding reduces to 16px.\n\n## Elevation & Depth\nDepth is communicated through **Tonal Layering** rather than traditional shadows, ensuring the UI remains crisp on high-resolution monitors.\n\n- **Level 0 (Base):** `#0B0E14` - The canvas.\n- **Level 1 (Surface):** `#151922` - Used for metric cards, sidebars, and main content areas.\n- **Level 2 (Overlay):** `#1C212C` - Used for modals, dropdown menus, and tooltips. Use a subtle 1px border (`#242938`) to provide definition.\n- **Interaction:** On hover, interactive surfaces should lighten by 2-3% or gain a primary-colored 1px stroke.\n\n## Shapes\nThis design system utilizes a tiered corner radius system to differentiate between structural containers and data points:\n\n- **Large Containers (Cards, Dashboards):** 8px - 12px (`rounded-lg`) for a modern, professional feel.\n- **Small Elements (Input fields, Buttons):** 6px.\n- **Data Elements (Table Rows, Progress Bar segments):** 2px to maintain a rigid, technical appearance.\n- **Status Pills:** Fully rounded (pill-shaped) to distinguish them from interactive buttons.\n\n## Components\n\n### Status Badges (Pills)\nBadges use a \"Low-Opacity Fill + High-Contrast Text\" pattern.\n- **Firing:** Red background (15% opacity), Solid Red text, 2px rounded corners.\n- **Resolved:** Emerald background (15% opacity), Solid Emerald text.\n- **Suppressed:** Muted Purple background (15% opacity), Solid Purple text.\n\n### Data Tables\n- **Height:** Row height fixed at 32px for high-density \"Compact\" mode.\n- **Border:** Bottom-only border of 1px `#242938`.\n- **Typography:** Use `code-sm` for technical data values and `body-sm` for headers.\n\n### Metric Cards\n- **Header:** Title in `body-sm` (bold) with an \"Info\" icon for tooltip descriptions.\n- **Value:** Large `code-md` or `headline-md` value centered or left-aligned.\n- **Sparklines:** 2px stroke width primary or semantic color (Red if the metric is in an alert state), no fill below the line to keep the UI clean.\n\n### Input Fields\n- **Background:** `#0B0E14` (Inset look).\n- **Border:** 1px `#242938`.\n- **Focus State:** 1px `#3B82F6` with a subtle outer glow of the same color (4px blur).\n"
+}

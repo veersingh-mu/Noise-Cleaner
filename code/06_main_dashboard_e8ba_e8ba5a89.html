@@ -1,0 +1,464 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SignalGuard - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#32353c",
+                        "surface-container-low": "#191b23",
+                        "tertiary": "#ffb786",
+                        "on-primary": "#002e6a",
+                        "background": "#10131a",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-tertiary": "#502400",
+                        "primary": "#3B82F6",
+                        "on-secondary": "#3c0091",
+                        "on-primary-fixed-variant": "#004395",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-dim": "#10131a",
+                        "on-tertiary-fixed": "#311400",
+                        "on-error": "#690005",
+                        "on-background": "#e1e2ec",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "inverse-primary": "#005ac2",
+                        "on-primary-fixed": "#001a42",
+                        "primary-container": "#4d8eff",
+                        "surface-bright": "#363941",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "outline-variant": "#424754",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#2e3038",
+                        "on-surface": "#e1e2ec",
+                        "surface-container-lowest": "#0b0e15",
+                        "error": "#EF4444",
+                        "warning": "#F59E0B",
+                        "on-tertiary-container": "#461f00",
+                        "on-surface-variant": "#c2c6d6",
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-container": "#00285d",
+                        "secondary": "#d0bcff",
+                        "surface-container": "#1d2027",
+                        "outline": "#8c909f",
+                        "surface": "#10131a",
+                        "surface-tint": "#adc6ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "surface-variant": "#32353c",
+                        "inverse-surface": "#e1e2ec",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#23005c",
+                        "secondary-container": "#571bc1",
+                        "tertiary-container": "#df7412",
+                        "on-secondary-container": "#c4abff",
+                        "surface-container-high": "#272a31"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "section-gap": "32px",
+                        "row-gap": "4px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "code-sm": ["JetBrains Mono"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+                    },
+                    "animation": {
+                        "pulse-fast": "pulse-scale 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                        "glow": "glow 2s ease-in-out infinite alternate",
+                        "fade-in-up": "fadeInUp 0.3s ease-out forwards"
+                    },
+                    "keyframes": {
+                        "pulse-scale": {
+                            "0%, 100%": { opacity: "1", transform: "scale(1)" },
+                            "50%": { opacity: ".5", transform: "scale(1.2)" }
+                        },
+                        "glow": {
+                            "0%": { textShadow: "0 0 5px rgba(59, 130, 246, 0.2)" },
+                            "100%": { textShadow: "0 0 20px rgba(59, 130, 246, 0.6), 0 0 10px rgba(59, 130, 246, 0.4)" }
+                        },
+                        "fadeInUp": {
+                            "0%": { opacity: "0", transform: "translateY(10px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .pulse-dot {
+            animation: pulse-scale 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .shimmer-text {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        .feed-row {
+            opacity: 0;
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+        .feed-row:nth-child(1) { animation-delay: 0.1s; }
+        .feed-row:nth-child(2) { animation-delay: 0.2s; }
+        .feed-row:nth-child(3) { animation-delay: 0.3s; }
+        .feed-row:nth-child(4) { animation-delay: 0.4s; }
+        .feed-row:nth-child(5) { animation-delay: 0.5s; }
+        .feed-row:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface text-primary dark:text-primary font-body-sm text-body-sm h-16 fixed top-0 right-0 left-64 z-10 border-b border-outline-variant dark:border-outline-variant flex justify-between items-center px-6">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary">
+            SignalGuard
+        </div>
+<div class="flex items-center gap-4 bg-surface-container-low rounded p-1 border border-outline-variant">
+<button class="px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-bold">Prod</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors">Staging</button>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></div>
+<span class="text-on-surface font-bold">Live</span>
+<span class="text-on-surface-variant ml-2 cursor-pointer hover:text-primary transition-colors">Pulse</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">settings</span>
+<img alt="User Avatar" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small, circular avatar portrait of a technical operator or engineer. Professional, modern lighting. High quality profile picture for a dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKiJhpREAK1ANwJ2dNYgXG0k8YQ5hcHlVVptah5AKONR2e2NCTzn3utURX-hxWq7RBAi1Klx6PzlnbI7IieYq3HfYMbPzTyRLkyzPZNFScZHPLdAGaGDP8uCSukn1cZI7OOXUezO00iyz0ygfZdz_4NnE-eBixGXYKJFmW_FHqoSslWBkbdUhMxzTF5wex1MA2nq0FwJ9S-GoNTv4Yj9mmtzpdMuNuwOn35JV7A0QDEu-uy-KdmXYQVQ">
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-low text-primary dark:text-primary font-body-sm text-body-sm h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant flex flex-col p-4 z-20">
+<div class="mb-8 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface mb-1">SignalGuard</h1>
+<p class="text-on-surface-variant font-mono">v2.4.1-stable</p>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-colors duration-200 hover:bg-surface-container-highest cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">warning</span>
+                Incidents
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Config
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">description</span>
+                Documentation
+            </a>
+</div>
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                Logs
+            </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-16 p-container-padding">
+<!-- Hero Metric -->
+<section class="bg-surface-container-low border border-outline-variant rounded-lg p-6 mb-section-gap relative overflow-hidden group hover:border-primary transition-colors">
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.2) 100%);"></div>
+<div class="relative z-10 flex flex-col items-center justify-center text-center">
+<h2 class="font-body-md text-body-md font-bold text-on-surface-variant mb-2 flex items-center gap-2">
+                    Noise Reduction Ratio
+                    <span class="material-symbols-outlined text-[16px] cursor-help" title="Percentage of raw events filtered out before becoming alerts">info</span>
+</h2>
+<div class="font-display-lg text-display-lg text-primary mb-2 font-mono shimmer-text">94.2%</div>
+<p class="font-code-md text-code-md text-on-surface-variant"><span class="font-mono">12,847</span> raw events -&gt; <span class="font-mono">743</span> alerts sent <span class="text-on-surface opacity-50">(last 24h)</span></p>
+</div>
+<!-- Faux Sparkline Background -->
+<div class="absolute bottom-0 left-0 w-full h-1/3 opacity-20 pointer-events-none">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 100">
+<path class="text-primary" d="M0,80 L50,60 L100,70 L150,40 L200,50 L250,20 L300,30 L350,10 L400,40 L450,20 L500,50 L550,30 L600,60 L650,40 L700,70 L750,50 L800,80 L850,60 L900,90 L950,70 L1000,100" fill="none" stroke="currentColor" stroke-width="2"></path>
+</svg>
+</div>
+</section>
+<!-- Stat Row -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-section-gap">
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 hover:bg-surface-container-highest transition-colors">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface-variant mb-2 flex items-center justify-between">
+                    Open Incidents
+                    <span class="material-symbols-outlined text-[16px]">info</span>
+</h3>
+<div class="font-headline-md text-headline-md text-on-surface font-mono">12</div>
+</div>
+<div class="bg-surface-container-low border border-error border-opacity-50 rounded p-4 hover:bg-surface-container-highest transition-colors relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface-variant mb-2 flex items-center justify-between">
+                    Critical Firing
+                    <span class="material-symbols-outlined text-[16px]">info</span>
+</h3>
+<div class="flex items-center gap-2">
+<div class="font-headline-md text-headline-md text-error font-mono">2</div>
+<span class="bg-error bg-opacity-15 text-error font-code-sm text-code-sm px-2 py-0.5 rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error pulse-dot"></span> Active
+                    </span>
+</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 hover:bg-surface-container-highest transition-colors">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface-variant mb-2 flex items-center justify-between">
+                    Avg. Time to Alert
+                    <span class="material-symbols-outlined text-[16px]">info</span>
+</h3>
+<div class="font-headline-md text-headline-md text-on-surface font-mono">1.8s</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant rounded p-4 hover:bg-surface-container-highest transition-colors">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface-variant mb-2 flex items-center justify-between">
+                    Suppressed Today
+                    <span class="material-symbols-outlined text-[16px]">info</span>
+</h3>
+<div class="font-headline-md text-headline-md text-on-surface font-mono">12,104</div>
+</div>
+</section>
+<!-- Two Column Layout -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-section-gap">
+<!-- Left Column: Open Incidents Table (60%) -->
+<div class="lg:col-span-7 bg-surface-container-low border border-outline-variant rounded-lg flex flex-col">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high rounded-t-lg">
+<h3 class="font-body-md text-body-md font-bold">Open Incidents</h3>
+<button class="text-primary hover:text-primary-container text-body-sm font-body-sm">View All</button>
+</div>
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant font-body-sm text-body-sm text-on-surface-variant">
+<th class="p-3 w-8"></th>
+<th class="p-3 font-normal">Fingerprint</th>
+<th class="p-3 font-normal">Service</th>
+<th class="p-3 font-normal text-right">Count</th>
+<th class="p-3 font-normal">Last Seen</th>
+<th class="p-3 font-normal">Status</th>
+</tr>
+</thead>
+<tbody class="font-code-sm text-code-sm">
+<tr class="border-b border-outline-variant hover:bg-surface-container-highest transition-colors relative">
+<td class="absolute left-0 top-0 bottom-0 w-1 bg-error"></td>
+<td class="p-3 text-center"><div class="w-2 h-2 rounded-full bg-error mx-auto pulse-dot"></div></td>
+<td class="p-3 text-on-surface-variant font-mono">a7f9b2e1</td>
+<td class="p-3">auth-service</td>
+<td class="p-3 text-right">
+<div class="flex items-center justify-end gap-1 font-mono">
+                                        4,192 <span class="material-symbols-outlined text-[14px] text-error">trending_up</span>
+</div>
+</td>
+<td class="p-3 text-on-surface-variant font-mono">2m ago</td>
+<td class="p-3">
+<span class="bg-error bg-opacity-15 text-error px-2 py-0.5 rounded whitespace-nowrap">Firing</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-highest transition-colors relative">
+<td class="absolute left-0 top-0 bottom-0 w-1 bg-error"></td>
+<td class="p-3 text-center"><div class="w-2 h-2 rounded-full bg-error mx-auto pulse-dot"></div></td>
+<td class="p-3 text-on-surface-variant font-mono">c3d4e5f6</td>
+<td class="p-3">payment-gateway</td>
+<td class="p-3 text-right">
+<div class="flex items-center justify-end gap-1 font-mono">
+                                        842 <span class="material-symbols-outlined text-[14px] text-error">trending_up</span>
+</div>
+</td>
+<td class="p-3 text-on-surface-variant font-mono">5m ago</td>
+<td class="p-3">
+<span class="bg-error bg-opacity-15 text-error px-2 py-0.5 rounded whitespace-nowrap">Firing</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-highest transition-colors">
+<td class="p-3 text-center"><div class="w-2 h-2 rounded-full bg-warning mx-auto"></div></td>
+<td class="p-3 text-on-surface-variant font-mono">8b9c0d1e</td>
+<td class="p-3">user-profile</td>
+<td class="p-3 text-right">
+<div class="flex items-center justify-end gap-1 font-mono">
+                                        15 <span class="material-symbols-outlined text-[14px] text-warning">trending_flat</span>
+</div>
+</td>
+<td class="p-3 text-on-surface-variant font-mono">14m ago</td>
+<td class="p-3">
+<span class="bg-warning bg-opacity-15 text-warning px-2 py-0.5 rounded whitespace-nowrap">Cooling Down</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-highest transition-colors">
+<td class="p-3 text-center"><div class="w-2 h-2 rounded-full bg-emerald-500 mx-auto"></div></td>
+<td class="p-3 text-on-surface-variant font-mono">f1a2b3c4</td>
+<td class="p-3">notification-worker</td>
+<td class="p-3 text-right">
+<div class="flex items-center justify-end gap-1 font-mono">
+                                        2 <span class="material-symbols-outlined text-[14px] text-emerald-500">trending_down</span>
+</div>
+</td>
+<td class="p-3 text-on-surface-variant font-mono">1h ago</td>
+<td class="p-3">
+<span class="bg-emerald-500 bg-opacity-15 text-emerald-500 px-2 py-0.5 rounded whitespace-nowrap">Resolved</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Column: Live Event Feed (40%) -->
+<div class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high rounded-t-lg">
+<h3 class="font-body-md text-body-md font-bold flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary pulse-dot"></div>
+                        Live Event Feed
+                    </h3>
+<div class="flex gap-2">
+<button class="text-on-surface-variant hover:text-on-surface material-symbols-outlined text-[18px]">filter_list</button>
+<button class="text-on-surface-variant hover:text-on-surface material-symbols-outlined text-[18px]">more_vert</button>
+</div>
+</div>
+<div class="flex-1 p-2 font-code-sm text-code-sm overflow-y-auto space-y-1">
+<div class="flex gap-2 p-1.5 hover:bg-surface-container-low rounded group feed-row">
+<span class="material-symbols-outlined text-[14px] text-surface-variant mt-0.5 group-hover:text-primary transition-colors">check_circle</span>
+<div class="flex-1">
+<span class="text-on-surface-variant mr-2 font-mono">2s ago</span>
+<span class="text-primary font-mono">inventory-api</span>
+<span class="text-on-surface ml-2">TimeoutError: Redis connection</span>
+</div>
+</div>
+<div class="flex gap-2 p-1.5 hover:bg-surface-container-low rounded group feed-row">
+<span class="material-symbols-outlined text-[14px] text-surface-variant mt-0.5 group-hover:text-primary transition-colors">check_circle</span>
+<div class="flex-1">
+<span class="text-on-surface-variant mr-2 font-mono">5s ago</span>
+<span class="text-primary font-mono">inventory-api</span>
+<span class="text-on-surface ml-2">TimeoutError: Redis connection</span>
+</div>
+</div>
+<div class="flex gap-2 p-1.5 bg-error bg-opacity-10 hover:bg-error hover:bg-opacity-20 rounded border-l-2 border-error group feed-row">
+<span class="material-symbols-outlined text-[14px] text-error mt-0.5">bolt</span>
+<div class="flex-1">
+<span class="text-on-surface-variant mr-2 font-mono">12s ago</span>
+<span class="text-primary font-mono">auth-service</span>
+<span class="text-error font-bold ml-2">RateLimitExceeded: 503 Service Unavailable</span>
+</div>
+</div>
+<div class="flex gap-2 p-1.5 hover:bg-surface-container-low rounded group feed-row">
+<span class="material-symbols-outlined text-[14px] text-surface-variant mt-0.5 group-hover:text-primary transition-colors">check_circle</span>
+<div class="flex-1">
+<span class="text-on-surface-variant mr-2 font-mono">18s ago</span>
+<span class="text-primary font-mono">frontend-app</span>
+<span class="text-on-surface ml-2">Client JS Error: Cannot read properties of undefined</span>
+</div>
+</div>
+<div class="flex gap-2 p-1.5 hover:bg-surface-container-low rounded group feed-row">
+<span class="material-symbols-outlined text-[14px] text-surface-variant mt-0.5 group-hover:text-primary transition-colors">check_circle</span>
+<div class="flex-1">
+<span class="text-on-surface-variant mr-2 font-mono">24s ago</span>
+<span class="text-primary font-mono">inventory-api</span>
+<span class="text-on-surface ml-2">TimeoutError: Redis connection</span>
+</div>
+</div>
+<div class="flex gap-2 p-1.5 bg-error bg-opacity-10 hover:bg-error hover:bg-opacity-20 rounded border-l-2 border-error group feed-row">
+<span class="material-symbols-outlined text-[14px] text-error mt-0.5">bolt</span>
+<div class="flex-1">
+<span class="text-on-surface-variant mr-2 font-mono">31s ago</span>
+<span class="text-primary font-mono">payment-gateway</span>
+<span class="text-error font-bold ml-2">ConnectionRefused: Upstream provider timeout</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Cooldown Matrix Heatmap -->
+<section class="bg-surface-container-low border border-outline-variant rounded-lg p-4">
+<div class="mb-4 flex justify-between items-end">
+<div>
+<h3 class="font-body-md text-body-md font-bold mb-1">Cooldown Matrix Heatmap</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Event intensity across services by severity</p>
+</div>
+<div class="flex items-center gap-2 font-code-sm text-code-sm text-on-surface-variant">
+<span class="">Low</span>
+<div class="flex gap-1">
+<div class="w-4 h-4 rounded bg-surface-container-highest"></div>
+<div class="w-4 h-4 rounded bg-warning bg-opacity-20"></div>
+<div class="w-4 h-4 rounded bg-warning bg-opacity-60"></div>
+<div class="w-4 h-4 rounded bg-error bg-opacity-60"></div>
+<div class="w-4 h-4 rounded bg-error"></div>
+</div>
+<span class="">High</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-code-sm text-code-sm border-spacing-1 border-collapse">
+<thead>
+<tr>
+<th class="p-2 w-48 text-on-surface-variant font-normal">Service</th>
+<th class="p-2 text-center text-on-surface-variant font-normal">Critical</th>
+<th class="p-2 text-center text-on-surface-variant font-normal">High</th>
+<th class="p-2 text-center text-on-surface-variant font-normal">Medium</th>
+<th class="p-2 text-center text-on-surface-variant font-normal">Low</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="p-2 text-primary border-b border-outline-variant border-opacity-30 font-mono">auth-service</td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-error flex items-center justify-center text-on-error font-bold font-mono relative group cursor-pointer">142<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-error bg-opacity-60 flex items-center justify-center font-mono relative group cursor-pointer">89<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-warning bg-opacity-20 flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">12<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">4<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+</tr>
+<tr>
+<td class="p-2 text-primary border-b border-outline-variant border-opacity-30 font-mono">payment-gateway</td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-error flex items-center justify-center text-on-error font-bold font-mono relative group cursor-pointer">84<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-warning bg-opacity-60 flex items-center justify-center font-mono relative group cursor-pointer">45<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-warning bg-opacity-20 flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">8<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">0<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+</tr>
+<tr>
+<td class="p-2 text-primary border-b border-outline-variant border-opacity-30 font-mono">inventory-api</td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-warning bg-opacity-20 flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">12<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">3<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-warning bg-opacity-60 flex items-center justify-center font-bold font-mono relative group cursor-pointer">1,402<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1 border-b border-outline-variant border-opacity-30"><div class="w-full h-8 rounded bg-warning bg-opacity-20 flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">450<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+</tr>
+<tr>
+<td class="p-2 text-primary font-mono">frontend-app</td>
+<td class="p-1"><div class="w-full h-8 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">0<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1"><div class="w-full h-8 rounded bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">5<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1"><div class="w-full h-8 rounded bg-warning bg-opacity-20 flex items-center justify-center text-on-surface-variant font-mono relative group cursor-pointer">24<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+<td class="p-1"><div class="w-full h-8 rounded bg-warning bg-opacity-60 flex items-center justify-center font-bold font-mono relative group cursor-pointer">892<div class="absolute hidden group-hover:flex flex-col gap-2 p-3 bg-surface-container-highest border border-outline-variant rounded-lg shadow-xl z-50 -top-12 left-1/2 -translate-x-1/2 min-w-[160px] pointer-events-auto relative group cursor-pointer" style="opacity: 0;"><span class="text-on-surface font-bold">Incident Summary</span><a href="#" class="text-primary hover:text-primary-container flex items-center gap-1 font-bold">View Details <span class="material-symbols-outlined text-[14px]">open_in_new</span></a></div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+
+
+</body></html>

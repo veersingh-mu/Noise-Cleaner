@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SignalGuard - Incident Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#32353c",
+                        "surface-container-low": "#191b23",
+                        "tertiary": "#ffb786",
+                        "on-primary": "#002e6a",
+                        "background": "#10131a",
+                        "primary-fixed": "#d8e2ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-tertiary": "#502400",
+                        "primary": "#adc6ff",
+                        "on-secondary": "#3c0091",
+                        "on-primary-fixed-variant": "#004395",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-dim": "#10131a",
+                        "on-tertiary-fixed": "#311400",
+                        "on-error": "#690005",
+                        "on-background": "#e1e2ec",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "inverse-primary": "#005ac2",
+                        "on-primary-fixed": "#001a42",
+                        "primary-container": "#4d8eff",
+                        "surface-bright": "#363941",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "outline-variant": "#424754",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#2e3038",
+                        "on-surface": "#e1e2ec",
+                        "surface-container-lowest": "#0b0e15",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#461f00",
+                        "on-surface-variant": "#c2c6d6",
+                        "secondary-fixed": "#e9ddff",
+                        "on-primary-container": "#00285d",
+                        "secondary": "#d0bcff",
+                        "surface-container": "#1d2027",
+                        "outline": "#8c909f",
+                        "surface": "#10131a",
+                        "surface-tint": "#adc6ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "surface-variant": "#32353c",
+                        "inverse-surface": "#e1e2ec",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#23005c",
+                        "secondary-container": "#571bc1",
+                        "tertiary-container": "#df7412",
+                        "on-secondary-container": "#c4abff",
+                        "surface-container-high": "#272a31"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "section-gap": "32px",
+                        "row-gap": "4px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "code-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "code-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0B0E14; color: #e1e2ec; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
+        
+        /* High-density grid specific */
+        .incident-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 1024px) {
+            .incident-grid {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
+        /* Metric cards custom styles based on design system */
+        .metric-card {
+            background-color: #151922; /* Level 1 */
+            border: 1px solid #242938;
+            border-radius: 0.5rem;
+        }
+        
+        .metric-card-inner {
+            padding: 16px;
+        }
+
+        /* Badges */
+        .badge-firing { background-color: rgba(255, 180, 171, 0.15); color: #ffb4ab; border-radius: 2px; padding: 2px 8px; font-weight: 600; }
+        .badge-resolved { background-color: rgba(167, 243, 208, 0.15); color: #34d399; border-radius: 2px; padding: 2px 8px; font-weight: 600; }
+        .badge-critical { background-color: rgba(255, 180, 171, 0.15); color: #ffb4ab; border-radius: 2px; padding: 2px 8px; font-weight: 600; border: 1px solid rgba(255, 180, 171, 0.3); }
+
+        /* Code block syntax highlighting mockup */
+        .syntax-keyword { color: #d0bcff; }
+        .syntax-string { color: #ffb786; }
+        .syntax-function { color: #adc6ff; }
+        .syntax-error { color: #ffb4ab; }
+        
+        /* Timeline specific */
+        .timeline-bar { transition: height 0.3s ease; }
+        .timeline-bar:hover { opacity: 0.8; }
+        .cooldown-window { background: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(46, 48, 56, 0.5) 5px, rgba(46, 48, 56, 0.5) 10px); }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0E14; }
+        ::-webkit-scrollbar-thumb { background: #424754; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c2c6d6; }
+    </style>
+</head>
+<body class="font-body-md bg-background text-on-surface min-h-screen flex">
+<!-- SideNavBar (from JSON) -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant dark:border-outline-variant flex flex-col h-full p-4 z-20">
+<div class="mb-8 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">security</span>
+                SignalGuard
+            </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">v2.4.1-stable</p>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-lg">warning</span>
+                    Incidents
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+                    Config
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-lg">description</span>
+                    Documentation
+                </a>
+</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+                        Support
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors duration-200 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-lg">terminal</span>
+                        Logs
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- TopNavBar (from JSON) -->
+<header class="h-16 fixed top-0 right-0 left-64 z-10 bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant flex justify-between items-center px-6">
+<!-- Search Bar (on_left as per JSON) -->
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-[#0B0E14] border border-outline-variant rounded px-9 py-1.5 font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-on-surface-variant transition-all" placeholder="Search incidents..." type="text"/>
+</div>
+<!-- Navigation Links -->
+<nav class="flex items-center gap-4 ml-4">
+<a class="text-primary border-b-2 border-primary pb-1 font-body-sm text-body-sm font-semibold transition-colors" href="#">Prod</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">Staging</a>
+</nav>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="bg-primary text-on-primary px-3 py-1.5 rounded font-body-sm text-body-sm font-semibold hover:bg-primary-fixed transition-colors">Live</button>
+<button class="border border-outline-variant text-on-surface px-3 py-1.5 rounded font-body-sm text-body-sm hover:bg-surface-container-highest transition-colors">Pulse</button>
+<div class="flex items-center gap-2 border-l border-outline-variant pl-4 ml-2">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">settings</span>
+</button>
+<img alt="User Profile" class="w-8 h-8 rounded-full ml-2 border border-outline-variant object-cover" data-alt="A small, professional user avatar image suitable for a dark mode enterprise dashboard, minimal detailing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQh0wwpSYqIJnFsjKQG-2wlJQEBtGhmca0HYJnaBeCLv8rM2Z-sUPR1hQO768-ftAGMFnGgneWKmM7DhwwgzLDpuvkfIWbq_LHerHLw7jFb7I5um9lpGmaMZXu4W5NC4BnSbfE58HrJSxcGatlpUNPylITdn_5XLY8wLHGS9TArkqG53o8xskwHBiKz0K3lmM3Nl4vs3aQE--pfrPYys9Vi6jPP5OasGtX3KKAjaTpj_Uak8Q63_s50A"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-container-padding flex-1 overflow-x-hidden">
+<!-- Incident Header -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-section-gap">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="badge-firing font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">circle</span> FIRING
+                    </span>
+<span class="badge-critical font-body-sm text-body-sm">P1 - CRITICAL</span>
+<span class="font-code-md text-code-md text-on-surface-variant bg-surface-container-highest px-2 py-0.5 rounded border border-outline-variant select-all">
+                        #e2f9a1b4
+                    </span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-1">DatabaseConnectionPoolExhausted</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">PostgreSQL cluster 'prod-db-primary' is refusing new connections.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-highest text-on-surface border border-outline-variant hover:bg-surface-bright px-4 py-2 rounded flex items-center gap-2 transition-colors font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-sm">notifications_off</span>
+                    Silence Incident
+                </button>
+<button class="bg-error text-on-error hover:bg-error-container hover:text-on-error-container px-4 py-2 rounded flex items-center gap-2 transition-colors font-body-sm text-body-sm font-semibold">
+<span class="material-symbols-outlined text-sm">rocket_launch</span>
+                    Escalate
+                </button>
+</div>
+</div>
+<!-- Dashboard Grid Layout -->
+<div class="incident-grid">
+<!-- Left Panel: Metadata -->
+<div class="flex flex-col gap-4">
+<!-- Core Metadata -->
+<div class="metric-card">
+<div class="metric-card-inner flex flex-col gap-row-gap">
+<div class="flex justify-between items-center py-1 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-bold flex items-center gap-1">
+                                Service
+                                <span class="material-symbols-outlined text-[14px] cursor-help" title="Affected microservice">info</span>
+</span>
+<span class="font-code-sm text-code-sm text-primary">auth-service-v2</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-bold">Error Type</span>
+<span class="font-code-sm text-code-sm text-error">ConnectionTimeoutError</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-bold">First Seen</span>
+<span class="font-code-sm text-code-sm text-on-surface">2023-10-27T14:00:12Z</span>
+</div>
+<div class="flex justify-between items-center py-1 border-b border-outline-variant">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-bold">Last Seen</span>
+<span class="font-code-sm text-code-sm text-on-surface">2023-10-27T14:45:00Z</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-bold">Occurrences</span>
+<span class="font-code-sm text-code-sm text-tertiary">42,105</span>
+</div>
+</div>
+</div>
+<!-- Affected Instances -->
+<div class="metric-card flex-1 flex flex-col">
+<div class="p-3 border-b border-outline-variant bg-surface-container-high rounded-t-lg">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface">Affected Infrastructure</h3>
+</div>
+<div class="flex-1 p-0 overflow-hidden relative min-h-[200px]">
+<!-- Embedded map/viz placeholder -->
+<div class="absolute inset-0 bg-surface-container-low opacity-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-outline-variant">public</span>
+</div>
+<div class="absolute bottom-0 w-full bg-surface-container-highest/90 backdrop-blur-sm border-t border-outline-variant">
+<div class="p-2 space-y-1">
+<div class="flex justify-between items-center font-code-sm text-code-sm px-2 py-1 bg-surface rounded">
+<span class="text-on-surface">us-east-1a (eks-node-4)</span>
+<span class="text-error">12k err/s</span>
+</div>
+<div class="flex justify-between items-center font-code-sm text-code-sm px-2 py-1 bg-surface rounded">
+<span class="text-on-surface">us-east-1b (eks-node-7)</span>
+<span class="text-error">8k err/s</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Stack Trace & Activity -->
+<div class="flex flex-col gap-4">
+<!-- Stack Trace Viewer -->
+<div class="metric-card flex flex-col h-[400px]">
+<div class="p-3 border-b border-outline-variant bg-surface-container-high rounded-t-lg flex justify-between items-center">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">code</span>
+                            Normalized Stack Trace
+                        </h3>
+<div class="flex bg-[#0B0E14] rounded border border-outline-variant p-0.5">
+<button class="px-2 py-1 rounded bg-secondary-container text-on-secondary-container font-body-sm text-body-sm font-semibold transition-colors">Template</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest font-body-sm text-body-sm transition-colors">Raw Sample</button>
+</div>
+</div>
+<div class="flex-1 bg-[#0B0E14] overflow-auto p-4 font-code-sm text-code-sm rounded-b-lg">
+<pre class="m-0 leading-relaxed text-on-surface-variant"><span class="syntax-error">ConnectionTimeoutError</span>: Timeout acquiring connection from pool
+  at <span class="syntax-function">Pool._acquireTimeout</span> (<span class="syntax-string">node_modules/pg-pool/index.js:285:14</span>)
+  at <span class="syntax-function">listOnTimeout</span> (<span class="syntax-string">node:internal/timers:559:17</span>)
+  at <span class="syntax-function">processTimers</span> (<span class="syntax-string">node:internal/timers:502:7</span>)
+  
+<span class="text-outline">--- Context ---</span>
+{
+  <span class="syntax-keyword">"pool_size"</span>: <span class="syntax-string">100</span>,
+  <span class="syntax-keyword">"waiting_clients"</span>: <span class="syntax-string">452</span>,
+  <span class="syntax-keyword">"idle_clients"</span>: <span class="syntax-string">0</span>,
+  <span class="syntax-keyword">"db_host"</span>: <span class="syntax-string">"prod-db-primary.internal"</span>
+}
+
+<span class="text-outline">--- Query Fingerprint ---</span>
+<span class="syntax-keyword">SELECT</span> id, user_id, token <span class="syntax-keyword">FROM</span> sessions <span class="syntax-keyword">WHERE</span> token = <span class="syntax-string">$1</span> <span class="syntax-keyword">LIMIT</span> <span class="syntax-string">1</span>;
+</pre>
+</div>
+</div>
+<!-- Activity Log -->
+<div class="metric-card flex-1">
+<div class="p-3 border-b border-outline-variant bg-surface-container-high rounded-t-lg">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface">Dispatch &amp; Activity Log</h3>
+</div>
+<div class="p-4 space-y-4 max-h-[300px] overflow-y-auto">
+<!-- Log Item 1 -->
+<div class="flex gap-3">
+<div class="mt-1">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-tertiary">smart_toy</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">PagerDuty Escalation</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">14:05:12</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Incident triggered policy <span class="font-code-sm text-code-sm bg-surface px-1 py-0.5 rounded border border-outline-variant">DB_Critical_L1</span>. Paging on-call eng.</p>
+</div>
+</div>
+<!-- Log Item 2 -->
+<div class="flex gap-3">
+<div class="mt-1">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-primary">chat</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">Slack Notification</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">14:02:03</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Alert dispatched to channel <span class="font-code-sm text-code-sm text-primary">#alerts-db-prod</span>.</p>
+</div>
+</div>
+<!-- Log Item 3 -->
+<div class="flex gap-3 relative before:absolute before:left-3 before:top-6 before:bottom-[-20px] before:w-px before:bg-outline-variant">
+<div class="mt-1 relative z-10">
+<div class="w-6 h-6 rounded-full bg-error-container border border-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-error">warning</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-baseline">
+<span class="font-body-sm text-body-sm font-bold text-error">Incident Detected</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">14:00:12</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Anomaly detected in error rate for <span class="font-code-sm text-code-sm text-primary">auth-service-v2</span>. Threshold exceeded (10k/s &gt; 100/s).</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom: Timeline Histogram -->
+<div class="mt-section-gap metric-card mb-8">
+<div class="p-3 border-b border-outline-variant bg-surface-container-high rounded-t-lg flex justify-between items-center">
+<h3 class="font-body-sm text-body-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">bar_chart</span>
+                    Frequency Timeline (Last 1 Hour)
+                </h3>
+</div>
+<div class="p-4 h-[180px] relative">
+<!-- Cooldown Window Overlay -->
+<div class="absolute top-4 bottom-8 left-[10%] w-[15%] cooldown-window border-x border-outline-variant z-0" title="System Cooldown Window"></div>
+<!-- Y-Axis Labels -->
+<div class="absolute left-4 top-4 bottom-8 w-8 flex flex-col justify-between items-end pr-2 font-code-sm text-code-sm text-on-surface-variant z-10">
+<span>15k</span>
+<span>10k</span>
+<span>5k</span>
+<span>0</span>
+</div>
+<!-- Chart Area -->
+<div class="absolute left-14 right-4 top-4 bottom-8 border-b border-l border-outline-variant flex items-end justify-between px-1 gap-1 z-10">
+<!-- Bars (Mock Data) -->
+<div class="w-full bg-surface-container-highest timeline-bar rounded-t" style="height: 5%;"></div>
+<div class="w-full bg-surface-container-highest timeline-bar rounded-t" style="height: 8%;"></div>
+<div class="w-full bg-surface-container-highest timeline-bar rounded-t" style="height: 4%;"></div>
+<div class="w-full bg-surface-container-highest timeline-bar rounded-t" style="height: 6%;"></div>
+<div class="w-full bg-surface-container-highest timeline-bar rounded-t" style="height: 12%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 45%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 85%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 95%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 100%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 92%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 88%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 90%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 85%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 75%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 80%;"></div>
+<div class="w-full bg-error timeline-bar rounded-t" style="height: 78%;"></div>
+</div>
+<!-- X-Axis Labels -->
+<div class="absolute left-14 right-4 bottom-2 flex justify-between font-code-sm text-code-sm text-on-surface-variant z-10">
+<span>13:45</span>
+<span>14:00</span>
+<span>14:15</span>
+<span>14:30</span>
+<span>14:45</span>
+</div>
+</div>
+</div>
+</main>
+</body></html>
