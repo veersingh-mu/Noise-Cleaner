@@ -172,17 +172,13 @@ export function App() {
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-3">
-            {/* Live Socket / Firebase Status */}
+            {/* Live Firebase Status Badge */}
             <div
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono transition-all ${
-                isConnected
-                  ? 'bg-success/10 border-success/30 text-success'
-                  : 'bg-primary/10 border-primary/30 text-primary'
-              }`}
-              title={isConnected ? 'Connected to live Firebase & stream' : 'Syncing telemetry...'}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-success/40 bg-success/15 text-success text-xs font-mono font-medium shadow-sm transition-all"
+              title="Connected to Firebase and live deduplication stream"
             >
-              <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-success animate-pulse' : 'bg-primary animate-ping'}`} />
-              <span className="hidden sm:inline">{isConnected ? 'Firebase Live' : 'Syncing'}</span>
+              <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+              <span>Firebase Live</span>
             </div>
 
             {/* Simulator Trigger CTA */}
