@@ -60,7 +60,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({ onSaved }) => {
     const currentChannels = channelConfig.services[service] || [...channelConfig.default];
     const exists = currentChannels.includes(channel);
     const updated = exists
-      ? currentChannels.filter(c => c !== channel)
+      ? currentChannels.filter((c: string) => c !== channel)
       : [...currentChannels, channel];
 
     setChannelConfig({

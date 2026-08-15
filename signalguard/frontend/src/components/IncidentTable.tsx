@@ -316,7 +316,7 @@ export const IncidentTable: React.FC<IncidentTableProps> = ({
                               <div className="flex items-center gap-2">
                                 <span className="text-[11px] font-mono text-slate-500 uppercase">Active Hosts:</span>
                                 <div className="flex flex-wrap gap-1">
-                                  {inc.affectedInstances?.map(inst => (
+                                  {inc.affectedInstances?.map((inst: string) => (
                                     <span key={inst} className="text-[10px] font-mono bg-border px-1.5 py-0.5 rounded text-slate-300">
                                       {inst}
                                     </span>

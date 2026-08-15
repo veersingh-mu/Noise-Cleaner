@@ -6,7 +6,8 @@ node_modules/
 # Build outputs & caches
 dist/
 build/
-lib/
+/lib/
+signalguard-backend/functions/lib/
 *.tsbuildinfo
 .vite/
 

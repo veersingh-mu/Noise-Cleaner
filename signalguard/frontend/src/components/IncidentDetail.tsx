@@ -37,7 +37,7 @@ export const IncidentDetail: React.FC<IncidentDetailProps> = ({
 
   useEffect(() => {
     if (!incident) return;
-    api.getIncidentDetails(incident.id).then(res => {
+    api.getIncidentDetails(incident.id).then((res: { occurrences?: Occurrence[] }) => {
       setOccurrences(res.occurrences || []);
     }).catch(() => {});
   }, [incident]);
@@ -166,7 +166,7 @@ export const IncidentDetail: React.FC<IncidentDetailProps> = ({
               <span className="font-semibold">Affected Service Hosts ({incident.affectedInstances?.length || 0})</span>
             </div>
             <div className="flex flex-wrap gap-2">
-              {incident.affectedInstances?.map(inst => (
+              {incident.affectedInstances?.map((inst: string) => (
                 <div key={inst} className="px-2.5 py-1 rounded bg-background border border-border text-xs font-mono text-slate-300 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-primary" />
                   {inst}
