@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "build": "npm --prefix signalguard/frontend install && npm --prefix signalguard/frontend run build",
-    "dev": "npm --prefix signalguard/frontend run dev",
-    "preview": "npm --prefix signalguard/frontend run preview"
+    "build": "cd signalguard/frontend && npm install && npm run build",
+    "dev": "cd signalguard/frontend && npm run dev",
+    "preview": "cd signalguard/frontend && npm run preview"
   }
 }
