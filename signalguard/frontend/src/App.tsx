@@ -36,12 +36,17 @@ export function App() {
 
   const { metrics, displayNrr, history, updateMetrics } = useMetrics();
 
-  // WebSocket Live Subscriptions
+  // WebSocket & Firebase Live Subscriptions
   const { isConnected, liveEvents, clearLiveEvents } = useWebSocket({
     onMetricsTick: updateMetrics,
+    onIncidentsBatch: (batch) => {
+      if (batch && batch.length > 0) {
+        setIncidents(batch);
+      }
+    },
     onIncidentUpdate: (updatedInc, isNew) => {
-      setIncidents(prev => {
-        const idx = prev.findIndex(i => i.id === updatedInc.id);
+      setIncidents((prev) => {
+        const idx = prev.findIndex((i) => i.id === updatedInc.id);
         if (idx >= 0) {
           const next = [...prev];
           next[idx] = updatedInc;
@@ -49,7 +54,7 @@ export function App() {
         }
         return [updatedInc, ...prev];
       });
-    }
+    },
   });
 
   useEffect(() => {
@@ -167,17 +172,17 @@ export function App() {
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-3">
-            {/* Live Socket Status */}
+            {/* Live Socket / Firebase Status */}
             <div
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono ${
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-mono transition-all ${
                 isConnected
                   ? 'bg-success/10 border-success/30 text-success'
-                  : 'bg-warning/10 border-warning/30 text-warning'
+                  : 'bg-primary/10 border-primary/30 text-primary'
               }`}
-              title={isConnected ? 'Connected to live Redis stream' : 'Reconnecting...'}
+              title={isConnected ? 'Connected to live Firebase & stream' : 'Syncing telemetry...'}
             >
-              <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-success animate-pulse' : 'bg-warning'}`} />
-              <span className="hidden sm:inline">{isConnected ? 'Stream Live' : 'Connecting'}</span>
+              <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-success animate-pulse' : 'bg-primary animate-ping'}`} />
+              <span className="hidden sm:inline">{isConnected ? 'Firebase Live' : 'Syncing'}</span>
             </div>
 
             {/* Simulator Trigger CTA */}

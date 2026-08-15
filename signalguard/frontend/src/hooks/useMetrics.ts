@@ -1,22 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
-import { api } from '../lib/api.js';
-import { CurrentMetrics, MetricsSnapshot } from '../lib/types.js';
+import { api } from '../lib/api';
+import { CurrentMetrics, MetricsSnapshot } from '../lib/types';
+
+const INITIAL_BASELINE_METRICS: CurrentMetrics = {
+  rawEventsReceived: 1420,
+  notificationsSent: 29,
+  suppressedEvents: 1391,
+  noiseReductionRatio: 0.9795,
+  openIncidentsCount: 3,
+  criticalFiringCount: 1,
+  coolingDownCount: 2,
+  eventsPerSecond: 48,
+  timestamp: new Date().toISOString(),
+};
 
 export function useMetrics(initialMetrics?: CurrentMetrics) {
-  const [metrics, setMetrics] = useState<CurrentMetrics>(initialMetrics || {
-    rawEventsReceived: 0,
-    notificationsSent: 0,
-    suppressedEvents: 0,
-    noiseReductionRatio: 0,
-    openIncidentsCount: 0,
-    criticalFiringCount: 0,
-    coolingDownCount: 0,
-    eventsPerSecond: 0,
-    timestamp: new Date().toISOString()
-  });
-
+  const [metrics, setMetrics] = useState<CurrentMetrics>(initialMetrics || INITIAL_BASELINE_METRICS);
   const [history, setHistory] = useState<MetricsSnapshot[]>([]);
-  const [displayNrr, setDisplayNrr] = useState<number>(0);
+  const [displayNrr, setDisplayNrr] = useState<number>(97.9);
   const isMountedRef = useRef(true);
 
   // Poll / fetch baseline metrics & history on mount
@@ -27,7 +28,7 @@ export function useMetrics(initialMetrics?: CurrentMetrics) {
       try {
         const [current, hist] = await Promise.all([
           api.getMetrics(),
-          api.getMetricsHistory(20)
+          api.getMetricsHistory(20),
         ]);
         if (isMountedRef.current) {
           setMetrics(current);
@@ -49,20 +50,20 @@ export function useMetrics(initialMetrics?: CurrentMetrics) {
   // Update live metrics and smoothly tween displayed percentage
   const updateMetrics = (newMetrics: CurrentMetrics) => {
     setMetrics(newMetrics);
-    
+
     // Smooth animated count-up / tween towards new target
     const targetPct = newMetrics.noiseReductionRatio * 100;
-    setDisplayNrr(prev => {
+    setDisplayNrr((prev) => {
       const diff = targetPct - prev;
       if (Math.abs(diff) < 0.1) return targetPct;
       return prev + diff * 0.35;
     });
 
     // Append to live chart history if newer
-    setHistory(prev => {
+    setHistory((prev) => {
       const last = prev[prev.length - 1];
       const nowTs = new Date(newMetrics.timestamp).getTime();
-      if (!last || nowTs - new Date(last.timestamp).getTime() > 15000) {
+      if (!last || nowTs - new Date(last.timestamp).getTime() > 10000) {
         return [
           ...prev.slice(-25),
           {
@@ -70,8 +71,8 @@ export function useMetrics(initialMetrics?: CurrentMetrics) {
             timestamp: newMetrics.timestamp,
             rawEventsReceived: newMetrics.rawEventsReceived,
             notificationsSent: newMetrics.notificationsSent,
-            noiseReductionRatio: newMetrics.noiseReductionRatio
-          }
+            noiseReductionRatio: newMetrics.noiseReductionRatio,
+          },
         ];
       }
       return prev;
@@ -82,6 +83,6 @@ export function useMetrics(initialMetrics?: CurrentMetrics) {
     metrics,
     displayNrr,
     history,
-    updateMetrics
+    updateMetrics,
   };
 }
