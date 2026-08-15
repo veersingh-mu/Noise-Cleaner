@@ -1,0 +1,10 @@
+{
+  "name": "noise-cleaner-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm --prefix signalguard/frontend install && npm --prefix signalguard/frontend run build",
+    "dev": "npm --prefix signalguard/frontend run dev",
+    "preview": "npm --prefix signalguard/frontend run preview"
+  }
+}

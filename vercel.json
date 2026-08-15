@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npm --prefix signalguard/frontend install && npm --prefix signalguard/frontend run build",
+  "outputDirectory": "signalguard/frontend/dist",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
